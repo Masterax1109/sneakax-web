@@ -11,7 +11,7 @@ const app = express();
 const mongoose = require('mongoose');
 
 const path = require('path');
-const loginRouter = require('./Controllers/login');
+const loginRouter = require('./controllers/login');
 
 //funcion autoinvocada para conectar a la base de datos y levantar el servidor
 // ()()
