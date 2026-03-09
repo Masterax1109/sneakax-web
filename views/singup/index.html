@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registro</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="/styles/output.css" />
+  </head>
+  <body class="bg-zinc-50 h-screen">
+    <nav
+      id="navbar"
+      class="fixed top-0 left-0 right-0 bg-indigo-700 h-16"
+    ></nav>
+
+    <div id="notification" class="fixed top-20 right-0 left-0"></div>
+
+    <div
+      class="flex pt-16 h-full max-w-7xl mx-auto justify-center items-center px-4"
+    >
+      <div class="hidden lg:flex w-2/4 justify-center items-center px-4">
+        <img class="w-3/4" src="/images/signup.svg" alt="image" />
+      </div>
+      <form
+        id="form"
+        class="flex pt-16 flex-col gap-4 bg-zinc-200 p-4 rounded-lg text-lg shadow-lg lg:w-2/4"
+      >
+        <div class="flex flex-col gap-2">
+          <label class="font-bold" for="name-input"
+            >Nombre <span class="text-red-500 text-zinc-900">*</span></label
+          >
+          <input
+            id="name-input"
+            type="text"
+            name="name-input"
+            autocomplete="off"
+            placeholder="Ingresa tu Nombre"
+            class="rounded-lg p-2 bg-zinc-100 focus:outline-indigo-700"
+          />
+          <p class="text-sm etxt-zinc-800">
+            Tanto el nombre como el apellido deben comenzar con mayusculas
+          </p>
+        </div>
+        <div class="flex flex-col gap-2">
+          <label class="font-bold" for="email-input"
+            >Email <span class="text-red-500 text-zinc-900">*</span></label
+          >
+          <input
+            id="email-input"
+            type="text"
+            name="email-input"
+            autocomplete="off"
+            placeholder="ejemplo@gmail.com"
+            class="rounded-lg p-2 bg-zinc-100 focus:outline-indigo-700"
+          />
+          <p class="text-sm etxt-zinc-800">El correo es requerido</p>
+        </div>
+        <div class="flex flex-col gap-2">
+          <label class="font-bold" for="password-input"
+            >Contraseña <span class="text-red-500 text-zinc-900">*</span></label
+          >
+          <input
+            id="password-input"
+            type="password"
+            name="password-input"
+            autocomplete="off"
+            placeholder="Ingresa tu contraseña"
+            class="rounded-lg p-2 bg-zinc-100 focus:outline-indigo-700"
+          />
+          <p class="text-sm etxt-zinc-800">
+            Debe tener al menos una letra <br />
+            Debe tener al menos un numero <br />
+            Debe tener al menos 8 caracteres
+          </p>
+        </div>
+        <div class="flex flex-col gap-2">
+          <label class="font-bold" for="password-input"
+            >Confirmar contraseña
+            <span class="text-red-500 text-zinc-900">*</span></label
+          >
+          <input
+            id="match-input"
+            type="password"
+            name="match-input"
+            autocomplete="off"
+            placeholder="Ingresa tu contraseña"
+            class="rounded-lg p-2 bg-zinc-100 focus:outline-indigo-700"
+          />
+          <p class="text-sm etxt-zinc-800">Debe coincidir con la contraseña</p>
+        </div>
+        <button
+          id="form-btn"
+          class="bg-indigo-700 py-2 px-4 rounded-lg font-bold text-white hover:bg-indigo-800 text-center transition ease-in-out disabled:opacity-40 disabled:cursor-not-allowed"
+          disabled
+        >
+          Registrar
+        </button>
+      </form>
+    </div>
+    <script src="/components/nav.js"></script>
+    <script type="module" src="../components/notification.js"></script>
+  </body>
+</html>
