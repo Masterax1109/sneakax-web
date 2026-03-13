@@ -42,6 +42,7 @@ module.exports = app;
     app.use('/img', express.static(path.resolve('img')));
 
     //RUTAS BACKEND
+    app.use(express.json());
     app.use('/api/login', loginRouter);    
 
     module.exports = app;

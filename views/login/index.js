@@ -11,11 +11,15 @@ form.addEventListener('submit', async e => {
             email: emailInput.value,
             password: passwordInput.value
         }
-      await axios.post('/api/login', user);
+      const respuesta = await axios.post('/api/login', user);
       window.location.pathname = `/todos/`;
+
+      console.log("¡Login exitoso! Aquí está la respuesta:", respuesta.data);
+
     } catch (error) {
         console.log(error);
         errorText.innerHTML = error.response.data.error;
+        console.error("Error en el login:", error.response.data);
 
     }
 

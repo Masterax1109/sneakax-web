@@ -1,6 +1,6 @@
 const loginRouter = require('express').Router();
 const { request } = require('node:http');
-const user = require('../models/user');
+const User = require('../models/user');
 const { response } = require('../app');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
@@ -9,7 +9,7 @@ const jwt = require('jsonwebtoken')
 loginRouter.post('/', async (request,response) => {
     const {email, password} = request.body;
     //COMPRUEBA USUARIO EN LA BASE DE DATOS
-    const userExist = UserActivation.findOne({email})
+    const userExist = await User.findOne({email});
     console.log(userExist);
 
     if (!userExist) {
@@ -32,7 +32,7 @@ loginRouter.post('/', async (request,response) => {
 
     }
 
-    const accesToken = jwt.sing(userForToken, process.env.ACCES_TOKEN_SECRET, {
+    const accesToken = jwt.sign(userForToken, process.env.ACCES_TOKEN_SECRET, {
         expiresIn: '1d'
     });
 
