@@ -13,6 +13,8 @@ const mongoose = require('mongoose');
 const path = require('path');
 const loginRouter = require('./controllers/login');
 
+const usersRouter = require('./controllers/users'); // 1. IMPORTA LA RUTA DE USUARIOS
+const cookieParser = require('cookie-parser');
 //funcion autoinvocada para conectar a la base de datos y levantar el servidor
 // ()()
 
@@ -32,7 +34,7 @@ const loginRouter = require('./controllers/login');
 
 })()
 
-module.exports = app;
+
 
     //RUTAS FRONTEND
     app.use('/', express.static(path.resolve('views', "home"))); //ruta del home
@@ -40,9 +42,12 @@ module.exports = app;
     app.use('/login', express.static(path.resolve('views', 'login'))); //ruta del login
     app.use('/components', express.static(path.resolve('views', 'components')));
     app.use('/images', express.static(path.resolve('img')));
+    app.use('/styles', express.static(path.resolve('styles'))); // <-- MOVIDA AQUÍ ARRIBA
 
     //RUTAS BACKEND
     app.use(express.json());
+    app.use(cookieParser());                  // 3. ACTIVA EL LECTOR DE COOKIES AQUÍ
     app.use('/api/login', loginRouter);    
+    app.use('/api/users', usersRouter);       // 4. CONECTA LA RUTA DE REGISTRO AQUÍ  
 
     module.exports = app;

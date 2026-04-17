@@ -2,105 +2,125 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-   <link rel="stylesheet" href="/styles/output.css" />
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+      tailwind.config = {
+        safelist: ['outline-green-500', 'outline-red-500', 'outline-2', 'outline']
+      }
+    </script>
+    
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <title>Registro</title>
-
+    
+    <title>SneakaX - Registro</title>
   </head>
-  <body class="bg-zinc-50">
-    <nav id="navbar" class="fixed top-0 left-0 right-0 bg-indigo-700 h-16">
+  <body class="bg-gray-100 overflow-x-hidden">
+    
+    <nav
+      id="navbar"
+      class="fixed top-0 left-0 right-0 bg-white h-16 flex items-center px-8 shadow-sm z-20"
+    >
+      <span class="font-extrabold text-2xl tracking-tighter">SNEAK<span class="text-[#FF5722]">AX</span></span>
     </nav>
- <div id="notification" class="fixed top-20 right-0 left-0">
- </div>
+    
+    <div id="notification" class="fixed top-20 right-0 left-0 z-50"></div>
 
-
-    <div class="pt-16 h-screen flex max-w-7xl mx-auto justify-center items-center px-4  gap-x-12">
-      <div class="hidden lg:flex w-2/4 justify-center items-center ">
-        <img src="/images/signup.svg" alt="imagen de login" />
+    <div class="flex pt-16 min-h-screen w-full mx-auto">
+      
+      <div class="hidden lg:flex w-1/2 justify-center items-center bg-gray-500 relative fixed h-full">
+        <p class="text-white/50 font-bold text-xl">[Espacio para la imagen de la suela]</p>
       </div>
-      <form id="form"class="flex flex-col gap-4 bg-zinc-200 p-4 rounded-lg text-md shadow-lg lg:w-2/4"
-      >
-        <div class="flex flex-col gap-2">
-          <label for="name-input" class="font-bold text-zinc-900">
-            Nombre <span class="text-red-500">*</span>
-          </label>
-          <input
-            type="text"
-            id="name-input"
-            name="name-input"
-            autocomplete="off"
-            placeholder="Ingresa tu nombre y apellido"
-            class="rounded-lg p-2 bg-zinc-100 focus:outline-indigo-700"
-          />
-          <p class="text-xs text-zinc-800">Tanto el nombre como el apellido deben comenzar en mayusculas.</p>
-        </div>
 
-
-        <div class="flex flex-col gap-2">
-          <label for="name-input" class="font-bold text-zinc-900">
-            Correo <span class="text-red-500">*</span>
-          </label>
-          <input
-            type="email"
-            id="email-input"
-            name="email-input"
-            autocomplete="off"
-            placeholder="ejemplo@correo.com"
-            class="rounded-lg p-2 bg-zinc-100 focus:outline-indigo-700"
-          />
-          <p class="text-xs text-zinc-800">El correo es requerido.</p>
-        </div>
-
-
-
-        <div class="flex flex-col gap-2">
-          <label for="name-input" class="font-bold text-zinc-900">
-            Contraseña <span class="text-red-500">*</span>
-          </label>
-          <input
-            type="password"
-            id="password-input"
-            name="password-input"
-            autocomplete="off"
-            class="rounded-lg p-2 bg-zinc-100 focus:outline-indigo-700"
-          />
-          <p class="text-xs text-zinc-800">
-            Debe tener al menos una letra.<br>
-            Debe tener al menos un numero.<br>
-            Debe tener al menos 8 caracteres.
-          </p>
-        </div>
-
-
-
-        <div class="flex flex-col gap-2">
-          <label for="name-input" class="font-bold text-zinc-900">
-            Confirmar contraseña <span class="text-red-500">*</span>
-          </label>
-          <input
-            type="password"
-            id="match-input"
-            name="match-input"
-            autocomplete="off"
-            class="rounded-lg p-2 bg-zinc-100 focus:outline-indigo-700"
-          />
-          <p class="text-xs text-zinc-800">
-            Debe coincidir con la contraseña ingresada.
-          </p>
-        </div>
-        <button 
-        id="form-btn"
-        disabled
-        class="bg-indigo-700 py-2 px-4 rounded-lg font-bold text-white hover:bg-indigo-800 text-center transition ease-in-out disabled:opacity-50 disabled:cursor-not-allowed"
+      <div class="flex w-full lg:w-1/2 justify-center items-center bg-[#FF5722] px-4 py-8 lg:ml-auto">
+        
+        <form
+          id="form"
+          class="flex flex-col gap-4 bg-zinc-50 p-8 rounded-xl shadow-2xl w-full sm:w-8/12 lg:w-9/12 border border-black my-auto"
         >
-        Registrar
-        </button>
-      </form>
-    </div>
-    <script src="/components/nav.js"></script>
-    <script type="module" src="index.js"></script>
-    <script type="module" src="../components/notification.js"></script>
+          <h2 class="font-black text-2xl text-center mb-2 uppercase text-gray-800">Crea tu cuenta</h2>
 
-  </body>
+          <div class="flex flex-col gap-1">
+            <label for="name-input" class="font-bold text-sm text-gray-700 uppercase">
+              Nombre <span class="text-[#FF5722]">*</span>
+            </label>
+            <input
+              type="text"
+              id="name-input"
+              name="name-input"
+              autocomplete="off"
+              placeholder="Ingresa tu nombre y apellido"
+              class="rounded-lg p-3 bg-white border border-gray-300 focus:outline-[#FF5722] transition-colors"
+            />
+            <p class="text-[10px] text-gray-500 font-medium">Tanto el nombre como el apellido deben comenzar en mayúsculas.</p>
+          </div>
+
+          <div class="flex flex-col gap-1">
+            <label for="email-input" class="font-bold text-sm text-gray-700 uppercase">
+              Correo <span class="text-[#FF5722]">*</span>
+            </label>
+            <input
+              type="email"
+              id="email-input"
+              name="email-input"
+              autocomplete="off"
+              placeholder="ejemplo@correo.com"
+              class="rounded-lg p-3 bg-white border border-gray-300 focus:outline-[#FF5722] transition-colors"
+            />
+            <p class="text-[10px] text-gray-500 font-medium">El correo es requerido.</p>
+          </div>
+
+          <div class="flex flex-col gap-1">
+            <label for="password-input" class="font-bold text-sm text-gray-700 uppercase">
+              Contraseña <span class="text-[#FF5722]">*</span>
+            </label>
+            <input
+              type="password"
+              id="password-input"
+              name="password-input"
+              autocomplete="off"
+              class="rounded-lg p-3 bg-white border border-gray-300 focus:outline-[#FF5722] transition-colors"
+            />
+            <p class="text-[10px] text-gray-500 font-medium leading-tight">
+              Debe tener al menos una letra.<br>
+              Debe tener al menos un número.<br>
+              Debe tener al menos 8 caracteres.
+            </p>
+          </div>
+
+          <div class="flex flex-col gap-1">
+            <label for="match-input" class="font-bold text-sm text-gray-700 uppercase">
+              Confirmar contraseña <span class="text-[#FF5722]">*</span>
+            </label>
+            <input
+              type="password"
+              id="match-input"
+              name="match-input"
+              autocomplete="off"
+              class="rounded-lg p-3 bg-white border border-gray-300 focus:outline-[#FF5722] transition-colors"
+            />
+            <p class="text-[10px] text-gray-500 font-medium">
+              Debe coincidir con la contraseña ingresada.
+            </p>
+          </div>
+          
+          <button 
+            id="form-btn"
+            disabled
+            class="bg-[#FF5722] py-3 px-4 rounded-full font-bold text-black border-2 border-transparent hover:bg-orange-600 hover:border-black text-center transition ease-in-out disabled:opacity-40 disabled:cursor-not-allowed mt-2"
+          >
+            REGISTRARSE
+          </button>
+
+          <p class="text-center text-sm font-bold mt-2">
+            ¿Ya tienes una cuenta? <a href="/login" class="text-black hover:underline cursor-pointer">Inicia sesión</a>
+          </p>
+        </form>
+      </div>
+    </div>
+    
+    <script type="module" src="index.js"></script>
+    <script type="module" src="/components/notification.js"></script>
 </html>

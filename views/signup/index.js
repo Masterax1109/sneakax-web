@@ -21,23 +21,23 @@ let emailValidation = false;
 let passwordValidation = false;
 let matchValidation = false;
 
-
-//función de validaciones
+// Función de validaciones adaptada a SneakaX
 const validations = (input, regexValidation) => {
- formBtn.disabled = nameValidation && emailValidation && passwordValidation && matchValidation ? false : true;
+    formBtn.disabled = nameValidation && emailValidation && passwordValidation && matchValidation ? false : true;
+    
     if(input.value === ''){
-        input.classList.remove('outline-green-700' , 'outline-2', 'outline');
-        input.classList.remove('outline-red-700' , 'outline-2', 'outline');
-        input.classList.add('focus:outline-indigo-700');
+        input.classList.remove('outline-green-500' , 'outline-2', 'outline');
+        input.classList.remove('outline-red-500' , 'outline-2', 'outline');
+        input.classList.add('focus:outline-[#FF5722]');
     } else if (regexValidation){
-   input.classList.remove('focus:outline-indigo-700');
-    input.classList.add('outline-green-700', 'outline-2', 'outline');
-} else if (!regexValidation) {
-       input.classList.remove('focus:outline-indigo-700');
-    input.classList.remove('outline-green-700', 'outline-2', 'outline');
-    input.classList.add('outline-red-700', 'outline-2', 'outline');
-
-}
+        input.classList.remove('focus:outline-[#FF5722]');
+        input.classList.remove('outline-red-500', 'outline-2', 'outline');
+        input.classList.add('outline-green-500', 'outline-2', 'outline');
+    } else if (!regexValidation) {
+        input.classList.remove('focus:outline-[#FF5722]');
+        input.classList.remove('outline-green-500', 'outline-2', 'outline');
+        input.classList.add('outline-red-500', 'outline-2', 'outline');
+    }
 };
 //eventos de inputs
 nameInput.addEventListener('input', e => {

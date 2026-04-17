@@ -2,62 +2,77 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login</title>
-    <link rel="stylesheet" href="/styles/output.css" />
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    
+    <title>SneakaX - Iniciar Sesión</title>
   </head>
-  <body class="bg-zinc-50">
+  <body class="bg-gray-100 overflow-hidden">
+    
     <nav
       id="navbar"
-      class="fixed top-0 left-0 right-0 bg-indigo-700 h-16"
-    ></nav>
-    <div
-      class="flex pt-16 h-screen max-w-7xl mx-auto justify-center items-center px-4"
+      class="fixed top-0 left-0 right-0 bg-white h-16 flex items-center px-8 shadow-sm z-10"
     >
-      <div class="hidden lg:flex w-2/4 justify-center items-center px-4">
-        <img class="w-3/4" src="/img/signup.svg" alt="image" />
+      <span class="font-extrabold text-2xl tracking-tighter">SNEAK<span class="text-[#FF5722]">AX</span></span>
+    </nav>
+
+    <div class="flex pt-16 h-screen w-full mx-auto">
+      
+      <div class="hidden lg:flex w-1/2 justify-center items-center bg-gray-500 relative">
+        <p class="text-white/50 font-bold text-xl">[Espacio para la imagen de la suela]</p>
       </div>
-      <form
-        id="form"
-        class="flex pt-16 flex-col gap-4 bg-zinc-200 p-4 rounded-lg text-lg shadow-lg w-full md:w-9/12 lg:w-2/4"
-      >
-        <div class="flex flex-col gap-2">
-          <label class="font-bold" for="email-input"
-            >Email <span class="text-red-500 ">*</span></label
-          >
-          <input
-            id="email-input"
-            type="text"
-            name="email-input"
-            autocomplete="off"
-            placeholder="Ingresa tu correo"
-            class="rounded-lg p-2 bg-zinc-100 focus:outline-indigo-700"
-          />
-        </div>
-        <div class="flex flex-col gap-2">
-          <label class="font-bold" for="password-input"
-            >Contraseña <span class="text-red-500 ">*</span></label
-          >
-          <input
-            id="password-input"
-            type="password"
-            name="password-input"
-            autocomplete="off"
-            placeholder="Ingresa tu contraseña"
-            class="rounded-lg p-2 bg-zinc-100 focus:outline-indigo-700"
-          />
-          <p id="error-text" class="text-sm text-red-600"></p>
-        </div>
-        <button
-          id="form-btn"
-          class="bg-indigo-700 py-2 px-4 rounded-lg font-bold text-white hover:bg-indigo-800 text-center transition ease-in-out disabled:opacity-40 disabled:cursor-not-allowed"
+
+      <div class="flex w-full lg:w-1/2 justify-center items-center bg-[#FF5722] px-4">
+        
+        <form
+          id="form"
+          class="flex flex-col gap-6 bg-zinc-50 p-8 rounded-xl shadow-2xl w-full sm:w-8/12 lg:w-8/12 border border-black"
         >
-          Iniciar sesión
-        </button>
-      </form>
+          <div class="flex flex-col gap-2">
+            <label class="font-bold text-sm text-gray-700 uppercase" for="email-input">
+              Usuario
+            </label>
+            <input
+              id="email-input"
+              type="text"
+              name="email-input"
+              autocomplete="off"
+              class="rounded-lg p-3 bg-white border border-gray-300 focus:outline-[#FF5722] transition-colors"
+            />
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <label class="font-bold text-sm text-gray-700 uppercase" for="password-input">
+              Contraseña
+            </label>
+            <input
+              id="password-input"
+              type="password"
+              name="password-input"
+              autocomplete="off"
+              class="rounded-lg p-3 bg-white border border-gray-300 focus:outline-[#FF5722] transition-colors"
+            />
+            <p id="error-text" class="text-sm text-red-600 hidden">Credenciales incorrectas.</p>
+          </div>
+
+          <button
+            id="form-btn"
+            class="bg-[#FF5722] py-3 px-4 rounded-full font-bold text-black border-2 border-transparent hover:bg-orange-600 hover:border-black text-center transition ease-in-out disabled:opacity-40 disabled:cursor-not-allowed mt-4"
+          >
+            LOGIN
+          </button>
+
+          <p class="text-center text-sm font-bold mt-2">
+            ¿Aún no te has registrado? <a href="/signup" class="text-black hover:underline cursor-pointer">Regístrate</a>
+          </p>
+        </form>
+      </div>
     </div>
-    <script src="/components/nav.js"></script>
+    
     <script src="index.js"></script>
   </body>
 </html>

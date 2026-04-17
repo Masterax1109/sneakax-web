@@ -4,23 +4,61 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/styles/output.css" />
-    <title>TodoApp</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <title>SneakaX - Inicio</title>
   </head>
-  <body>
-    <nav id="navbar" class="fixed top-0 left-0 right-0 bg-indigo-700 h-16">
+  <body class="bg-zinc-50 overflow-x-hidden">
+    
+    <nav
+      id="navbar"
+      class="fixed top-0 left-0 right-0 bg-white h-16 flex items-center justify-between px-8 shadow-sm z-20"
+    >
+      <span class="font-extrabold text-2xl tracking-tighter cursor-default">
+        SNEAK<span class="text-[#FF5722]">AX</span>
+      </span>
+      <div class="hidden md:flex gap-4 font-bold text-sm">
+        <a href="/login" class="hover:text-[#FF5722] transition-colors">Iniciar Sesión</a>
+        <a href="/signup" class="hover:text-[#FF5722] transition-colors">Registrarse</a>
+      </div>
     </nav>
     
-    <div class="pt-16 h-screen flex justify-center items-center flex-col md:flex-row lg:w-3/5  md:w-9/12 mx-auto px-4 gap-4 md:gap-8">
-      <h1 class="text-indigo-700 font-bold text-4xl md:text-7xl">ToDoAPP</h1>
-      <div class="flex flex-col gap-4 md:text-xl">
-        <p class="text-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro blanditiis placeat voluptates cum, ut rem tenetur harum pariatur sequi odio ipsa aut, distinctio, quasi fuga in quis dolorem veritatis et.</p>
-      <div class=" flex justify-around gap-4">
-        <a class="bg-slate-600 py-2 px-4 rounded-lg text-white font-bold hover:bg-slate-700 w-2/4 text-center transition ease-in-out" href="/login/">Login</a>
-        <a class="bg-indigo-700 py-2 px-4 rounded-lg text-white font-bold hover:bg-indigo-800 w-2/4 text-center transition ease-in-out" href="/signup/">SignUp</a>
+    <div class="pt-16 min-h-screen flex justify-center items-center flex-col md:flex-row max-w-7xl mx-auto px-6 gap-8 md:gap-16">
+      
+      <div class="flex flex-col gap-6 md:w-1/2 mt-10 md:mt-0">
+        <h1 class="text-black font-black text-6xl md:text-8xl tracking-tighter leading-none uppercase">
+          Pisa <br> <span class="text-[#FF5722]">Fuerte.</span>
+        </h1>
+        
+        <p class="text-gray-600 text-lg md:text-xl font-medium leading-relaxed max-w-md">
+          El marketplace definitivo para encontrar, comprar y vender los sneakers más exclusivos. Únete a la comunidad y eleva tu estilo al siguiente nivel.
+        </p>
+        
+        <div class="flex flex-col sm:flex-row gap-4 mt-4">
+          <a 
+            class="bg-white py-3 px-8 rounded-full text-black font-bold border-2 border-black hover:bg-gray-100 text-center transition ease-in-out uppercase text-sm" 
+            href="/login"
+          >
+            Iniciar Sesión
+          </a>
+          <a 
+            class="bg-[#FF5722] py-3 px-8 rounded-full text-black font-bold border-2 border-transparent hover:bg-orange-600 hover:border-black text-center transition ease-in-out uppercase text-sm" 
+            href="/signup"
+          >
+            Crear Cuenta
+          </a>
+        </div>
       </div>
+
+      <div class="w-full md:w-1/2 flex justify-center items-center">
+        <div class="bg-gray-200 rounded-2xl w-full h-80 md:h-[500px] flex justify-center items-center border border-gray-300 shadow-xl relative overflow-hidden">
+           <p class="text-gray-400 font-bold text-xl text-center px-4">
+             [Inserta aquí una imagen PNG de un sneaker increíble]
+           </p>
+        </div>
       </div>
+
     </div>
-    <script src="/components/nav.js"></script>
   </body>
 </html>

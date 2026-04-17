@@ -17,7 +17,7 @@ loginRouter.post('/', async (request,response) => {
 
     }
 
-    if (userExist.verified){
+    if (!userExist.verified){
         return response.status(400).json({ error: 'tu email no está verificado'});
     }
 
@@ -32,10 +32,11 @@ loginRouter.post('/', async (request,response) => {
 
     }
 
-    const accesToken = jwt.sign(userForToken, process.env.ACCES_TOKEN_SECRET, {
-        expiresIn: '1d'
+    // CÁMBIALO A:
+    const accessToken = jwt.sign(userForToken, process.env.ACCESS_TOKEN_SECRET, {
+    expiresIn: '1d'
     });
-
+    
     response.cookie('accessToken', accesToken, {
         expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 1),
         secure: process.env.NODE_ENV === 'production',
