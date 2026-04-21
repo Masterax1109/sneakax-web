@@ -63,12 +63,12 @@ const saltRounds = 10;
  usersRouter.patch('/:id/:token', async (request, response) => {
 try {
     const token = request.params.token; // obtener el token de los parámetros de la ruta
-const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-//decodificar el token para obtener el id del usuario
-//  console.log(decodedToken);// obtener el id del token decodificado
- const id = decodedToken.id;
- await User.findByIdAndUpdate(id, { verified: true });
- return response.sendStatus(200);
+    const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+    //decodificar el token para obtener el id del usuario
+    //  console.log(decodedToken);// obtener el id del token decodificado
+    const id = decodedToken.id;
+    await User.findByIdAndUpdate(id, { verified: true });
+    return response.sendStatus(200);
 
 } catch (error) {
     //encontrar el email del usuario    

@@ -42,7 +42,11 @@ const cookieParser = require('cookie-parser');
     app.use('/login', express.static(path.resolve('views', 'login'))); //ruta del login
     app.use('/components', express.static(path.resolve('views', 'components')));
     app.use('/images', express.static(path.resolve('img')));
-    app.use('/styles', express.static(path.resolve('styles'))); // <-- MOVIDA AQUÍ ARRIBA
+    app.use('/styles', express.static(path.resolve('styles')));
+    app.use('/verify', express.static(path.resolve('views', 'verify')));
+    app.get('/verify/:id/:token', (req, res) => {
+    res.sendFile(path.resolve('views', 'verify', 'index.html'));
+    });// Ruta para leer el link del correo y mostrar la pantalla de verificación
 
     //RUTAS BACKEND
     app.use(express.json());

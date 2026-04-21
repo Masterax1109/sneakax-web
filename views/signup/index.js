@@ -93,13 +93,15 @@ form.addEventListener('submit', async e => {
        validations(matchInput, false);
 
     } catch (error) {
+        
         // Mostrar notificación de error
-         createNotification(true, error.response.data.error);
+        const errorMessage = error.response?.data?.error || error.response?.data?.message || 'Error al registrar el usuario. Revisa la consola.';
+    
+        createNotification(true, errorMessage);
+    
         setTimeout(() => {
             notification.innerHTML = '';
-        }, 5000)
-            
-        
+        }, 5000);
     }
 });
 //crea un objeto nuevo de usuario y lo envía al servidor mediante una solicitud POST utilizando axios. Si la solicitud es exitosa, muestra una notificación de éxito y limpia el formulario; si hay un error, muestra una notificación de error.

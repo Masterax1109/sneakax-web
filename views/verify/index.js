@@ -20,7 +20,8 @@ const textInfo = document.querySelector('#text-info'); // Selector: Atrapa el p�
             window.location.pathname = '/login/';
         }, 2000); 
     } catch (error) {
-        // Si el link expiró, el código entra aquí y el mensaje se quedará en pantalla.
-        textInfo.innerHTML = error.response.data.error;
+        // Si el link expiró o el backend falla, atrapamos el error con seguridad
+        const errorMessage = error.response?.data?.error || error.response?.data?.message || 'Error al verificar. El link puede haber expirado.';
+        textInfo.innerHTML = errorMessage;
     }
 })();
