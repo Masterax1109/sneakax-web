@@ -9,7 +9,7 @@ const jwt = require('jsonwebtoken')
 loginRouter.post('/', async (request,response) => {
     const {email, password} = request.body;
     //COMPRUEBA USUARIO EN LA BASE DE DATOS
-    const userExist = await User.findOne({email});
+    const userExist = await User.findOne({ email: email.toLowerCase() });
     console.log(userExist);
 
     if (!userExist) {
@@ -37,7 +37,7 @@ loginRouter.post('/', async (request,response) => {
     expiresIn: '1d'
     });
     
-    response.cookie('accessToken', accesToken, {
+    response.cookie('accessToken', accessToken, {
         expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 1),
         secure: process.env.NODE_ENV === 'production',
         httpOnly : true

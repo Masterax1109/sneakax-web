@@ -4,7 +4,7 @@ const { verify } = require('node:crypto');
 const { type } = require('node:os');
 
 //se crea la tabla o modelo de las propiedades
-const userSchema = new mongoose.Schema ({
+const userSchema = new mongoose.Schema({
     name: String,
     email: String,
     passwordHash: String,
@@ -12,6 +12,11 @@ const userSchema = new mongoose.Schema ({
         type: Boolean,
         default: false
     },
+    // NUEVO: Agregamos el sistema de roles
+    rol: {
+        type: String,
+        default: 'cliente' // Por defecto, todo el que se registre será un cliente normal
+    }
 });
 
 //se congigura la respuesta del usuario

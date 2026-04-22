@@ -37,7 +37,8 @@ const cookieParser = require('cookie-parser');
 
 
     //RUTAS FRONTEND
-    app.use('/', express.static(path.resolve('views', "home"))); //ruta del home
+    app.use('/store', express.static(path.resolve('views', 'store')));
+    app.use('/home', express.static(path.resolve('views', 'HOME')));
     app.use('/signup', express.static(path.resolve('views','signup'))) //ruta del signup
     app.use('/login', express.static(path.resolve('views', 'login'))); //ruta del login
     app.use('/components', express.static(path.resolve('views', 'components')));
@@ -52,6 +53,9 @@ const cookieParser = require('cookie-parser');
     app.use(express.json());
     app.use(cookieParser());                  // 3. ACTIVA EL LECTOR DE COOKIES AQUÍ
     app.use('/api/login', loginRouter);    
-    app.use('/api/users', usersRouter);       // 4. CONECTA LA RUTA DE REGISTRO AQUÍ  
+    app.use('/api/users', usersRouter);       // 4. CONECTA LA RUTA DE REGISTRO AQUÍ
+    app.get('/', (request, response) => {
+    response.redirect('/store/');
+    });
 
     module.exports = app;
