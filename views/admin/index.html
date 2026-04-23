@@ -64,22 +64,35 @@
                     <!-- Marca -->
                     <div>
                         <label class="block text-sm font-bold text-gray-700 mb-2">Marca</label>
-                        <input type="text" id="shoe-brand" placeholder="Ej: Nike, New Balance, Vans..." class="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:border-black transition">
+                        <input type="text" id="shoe-brand" required placeholder="Ej: Nike, New Balance, Vans..." class="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:border-black transition">
                     </div>
 
                     <!-- Modelo -->
                     <div>
                         <label class="block text-sm font-bold text-gray-700 mb-2">Modelo</label>
-                        <input type="text" id="shoe-model" placeholder="Ej: Air Jordan 1 Retro" class="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:border-black transition">
+                        <input type="text" id="shoe-model" required placeholder="Ej: Air Jordan 1 Retro" class="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:border-black transition">
                     </div>
 
                     <!-- Precio -->
                     <div>
                         <label class="block text-sm font-bold text-gray-700 mb-2">Precio ($)</label>
-                        <input type="number" id="shoe-price" placeholder="0.00" class="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:border-black transition">
+                        <input type="number" id="shoe-price" required placeholder="0.00" class="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:border-black transition">
                     </div>
 
-                    <!-- Imagen (Tabs: URL o Archivo) -->
+                    <!-- Tallas (Sizes) -->
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Tallas Disponibles</label>
+                        <input type="text" id="shoe-sizes" required placeholder="Ej: 39, 40, 41, 42" class="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:border-black transition">
+                        <p class="text-xs text-gray-500 mt-1">Separa las tallas usando comas.</p>
+                    </div>
+
+                    <!-- Stock -->
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Cantidad (Stock)</label>
+                        <input type="number" id="shoe-stock" required placeholder="Ej: 15" class="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:border-black transition">
+                    </div>
+
+                    <!-- Imagen (URL o Archivo) -->
                     <div class="md:col-span-2">
                         <label class="block text-sm font-bold text-gray-700 mb-2">Imagen del Sneaker</label>
                         
@@ -119,12 +132,25 @@
 
             <!-- TABLA DE INVENTARIO -->
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-                <div class="p-6 border-b border-gray-200 bg-gray-50">
+                <div class="p-6 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
                     <h2 class="text-lg font-extrabold">👟 Últimos Agregados</h2>
                 </div>
-                <!-- Aquí inyectaremos los zapatos con JavaScript luego -->
-                <div class="p-12 text-center text-gray-400 font-bold">
-                    El inventario está vacío. Agrega tu primer par arriba.
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-gray-100 text-gray-600 text-xs uppercase tracking-wider border-b border-gray-200">
+                                <th class="p-4 font-bold">Imagen</th>
+                                <th class="p-4 font-bold">Marca & Modelo</th>
+                                <th class="p-4 font-bold">Precio</th>
+                                <th class="p-4 font-bold">Stock</th>
+                                <th class="p-4 font-bold text-center">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inventory-list" class="divide-y divide-gray-200">
+                            <!-- Aquí inyectaremos los zapatos con JS -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
 

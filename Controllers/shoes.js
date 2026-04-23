@@ -38,5 +38,14 @@ shoesRouter.get('/', async (request, response) => {
     }
 });
 
+// DELETE para eliminar un zapato por su ID
+shoesRouter.delete('/:id', async (request, response) => {
+    try {
+        await Shoe.findByIdAndDelete(request.params.id);
+        return response.status(204).end(); // 204 significa "Sin contenido" (se borró con éxito)
+    } catch (error) {
+        return response.status(400).json({ error: 'Error al eliminar el zapato' });
+    }
+});
 
 module.exports = shoesRouter;
