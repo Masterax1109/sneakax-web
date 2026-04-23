@@ -18,6 +18,8 @@ const cookieParser = require('cookie-parser');
 //funcion autoinvocada para conectar a la base de datos y levantar el servidor
 // ()()
 
+const shoesRouter = require('./controllers/shoes'); // se importa controller shoe
+
 //funcion flecha
 // ()=>{}
 
@@ -48,6 +50,7 @@ const cookieParser = require('cookie-parser');
     app.get('/verify/:id/:token', (req, res) => {
     res.sendFile(path.resolve('views', 'verify', 'index.html'));
     });// Ruta para leer el link del correo y mostrar la pantalla de verificación
+    app.use('/admin', express.static(path.resolve('views', 'admin')));
 
     //RUTAS BACKEND
     app.use(express.json());
@@ -57,5 +60,6 @@ const cookieParser = require('cookie-parser');
     app.get('/', (request, response) => {
     response.redirect('/store/');
     });
+    app.use('/api/shoes', shoesRouter); 
 
     module.exports = app;
