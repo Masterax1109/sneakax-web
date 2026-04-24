@@ -87,9 +87,9 @@ const loadShoes = async () => {
                     
                     <div class="mt-auto flex justify-between items-center">
                         <span class="text-2xl font-black text-[#FF5722]">$${shoe.price}</span>
-                        <button class="bg-black text-white px-5 py-2 rounded-full text-sm font-bold hover:bg-[#FF5722] hover:text-black transition-colors duration-300">
+                        <a href="/product?id=${shoe.id}" class="bg-black text-white px-5 py-2 rounded-full text-sm font-bold hover:bg-[#FF5722] hover:text-black transition-colors duration-300">
                             VER MÁS
-                        </button>
+                        </a>
                     </div>
                 </div>
             `;
@@ -106,7 +106,73 @@ const loadShoes = async () => {
 
 // Ejecutamos la función apenas cargue la página
 loadShoes();
-
-
-
 checkSession();
+
+// ============================================
+// LÓGICA DEL CARRITO (SIDEBAR)
+// ============================================
+const cartIcon = document.querySelector('#cart-icon');
+const closeCartBtn = document.querySelector('#close-cart-btn');
+const cartSidebar = document.querySelector('#cart-sidebar');
+const cartOverlay = document.querySelector('#cart-overlay');
+const cartItemsContainer = document.querySelector('#cart-items');
+const cartTotalLabel = document.querySelector('#cart-total');
+
+const openCart = () => {
+    cartSidebar.classList.remove('translate-x-full');
+    cartOverlay.classList.remove('hidden', 'opacity-0');
+    cartOverlay.classList.add('opacity-100');
+    renderCart();
+};
+
+const closeCart = () => {
+    cartSidebar.classList.add('translate-x-full');
+    cartOverlay.classList.remove('opacity-100');
+    cartOverlay.classList.add('opacity-0');
+    setTimeout(() => cartOverlay.classList.add('hidden'), 300);
+};
+
+if (cartIcon) cartIcon.addEventListener('click', openCart);
+if (closeCartBtn) closeCartBtn.addEventListener('click', closeCart);
+if (cartOverlay) cartOverlay.addEventListener('click', closeCart);
+
+const renderCart = () => {
+    const cart = JSON.parse(localStorage.getItem('sneakax_cart')) || [];
+    cartItemsContainer.innerHTML = '';
+    let total = 0;
+
+    if (cart.length === 0) {
+        cartItemsContainer.innerHTML = '<p class="text-gray-500 font-bold text-center mt-10">Tu carrito está vacío.</p>';
+        cartTotalLabel.textContent = '$0';
+        return;
+    }
+
+    cart.forEach((item, index) => {
+        total += Number(item.price);
+        const itemEl = document.createElement('div');
+        itemEl.className = 'flex items-center gap-4 border-b border-gray-100 pb-4';
+        itemEl.innerHTML = `
+            <div class="w-16 h-16 bg-white border border-gray-200 rounded-lg overflow-hidden flex-shrink-0 flex items-center justify-center p-1">
+                <img src="${item.image || '/images/placeholder.png'}" alt="${item.name}" class="object-contain w-full h-full">
+            </div>
+            <div class="flex-1">
+                <div class="font-extrabold text-sm leading-tight">${item.name}</div>
+                <div class="text-[10px] text-gray-500 font-bold uppercase mt-0.5">${item.brand} | Talla: ${item.size}</div>
+                <div class="text-[#FF5722] font-black text-sm mt-1">$${item.price}</div>
+            </div>
+            <button onclick="removeCartItem(${index})" class="text-gray-400 hover:text-red-500 transition px-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+            </button>
+        `;
+        cartItemsContainer.appendChild(itemEl);
+    });
+
+    cartTotalLabel.textContent = '$' + total;
+};
+
+window.removeCartItem = (index) => {
+    let cart = JSON.parse(localStorage.getItem('sneakax_cart')) || [];
+    cart.splice(index, 1);
+    localStorage.setItem('sneakax_cart', JSON.stringify(cart));
+    renderCart();
+};

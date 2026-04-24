@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SneakaX - Checkout</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#E5E7EB] font-sans antialiased min-h-screen flex flex-col">
+
+    <!-- NAVBAR -->
+    <nav class="flex justify-between items-center px-8 py-4 bg-white sticky top-0 z-50 shadow-sm border-b border-gray-100">
+        <a href="/store" class="font-extrabold text-2xl tracking-tighter hover:opacity-80 transition cursor-pointer text-black">
+            SNEAK<span class="text-[#FF5722]">AX</span>
+        </a>
+        <a href="/store" class="text-sm font-bold uppercase text-gray-500 hover:text-[#FF5722] transition border-b-2 border-transparent hover:border-[#FF5722]">
+            Volver a la tienda
+        </a>
+    </nav>
+
+    <main class="max-w-6xl mx-auto py-8 lg:py-12 px-4 w-full flex-grow flex flex-col lg:flex-row gap-8">
+        
+        <!-- RESUMEN DE COMPRA (Izquierda) -->
+        <section class="w-full lg:w-5/12 bg-white rounded-2xl shadow-md p-6 lg:p-8 flex flex-col h-fit">
+            <h2 class="text-xl font-black uppercase mb-6 flex items-center gap-2 border-b border-gray-100 pb-4">
+                <svg class="w-6 h-6 text-[#FF5722]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                Resumen de Orden
+            </h2>
+            
+            <div id="checkout-items" class="space-y-4 mb-6 overflow-y-auto max-h-[40vh] pr-2 custom-scrollbar">
+                <!-- Se inyecta dinámicamente con JS -->
+            </div>
+            
+            <div class="mt-auto pt-6 border-t border-gray-100">
+                <div class="flex flex-col gap-2 mb-4">
+                    <div class="flex justify-between text-sm font-bold text-gray-500">
+                        <span>Subtotal</span>
+                        <span id="subtotal-label">$0</span>
+                    </div>
+                    <div class="flex justify-between text-sm font-bold text-gray-500">
+                        <span>Envío estimado</span>
+                        <span class="text-green-500">Gratis</span>
+                    </div>
+                </div>
+                <div class="flex justify-between font-black text-2xl">
+                    <span>TOTAL</span>
+                    <span id="checkout-total" class="text-[#FF5722]">$0</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- MÉTODOS DE PAGO (Derecha) -->
+        <section class="w-full lg:w-7/12 bg-white rounded-2xl shadow-md p-6 lg:p-8 flex flex-col border-t-8 border-[#FF5722]">
+            <h2 class="text-xl font-black uppercase mb-6 flex items-center gap-2 border-b border-gray-100 pb-4">
+                <svg class="w-6 h-6 text-black" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+                Método de Pago
+            </h2>
+            
+            <p class="text-sm font-medium text-gray-500 mb-6">Por favor, selecciona a dónde deseas transferir y revisa los datos antes de realizar tu pago.</p>
+            
+            <div class="space-y-4 mb-8" id="payment-methods-container">
+                
+                <!-- ZELLE -->
+                <label class="flex flex-col border-2 border-gray-200 rounded-xl p-4 cursor-pointer transition-all has-[:checked]:border-[#FF5722] has-[:checked]:bg-orange-50">
+                    <div class="flex items-center gap-4">
+                        <input type="radio" name="payment" value="zelle" class="w-5 h-5 accent-[#FF5722] cursor-pointer" checked>
+                        <div class="flex items-center justify-between flex-grow">
+                            <span class="font-black text-lg tracking-tight uppercase">Zelle</span>
+                            <div class="px-3 py-1 bg-[#741bd9]/10 text-[#741bd9] font-bold text-[10px] rounded uppercase">Transferencia US</div>
+                        </div>
+                    </div>
+                    <div class="payment-details mt-4 text-sm text-gray-700 bg-white p-4 rounded-lg border border-gray-200" id="zelle-details">
+                        <div class="flex justify-between items-center border-b border-gray-100 pb-2 mb-2">
+                            <span class="font-bold text-gray-500 uppercase text-[10px]">Email Zelle</span>
+                            <span class="font-black">am606axel@gmail.com</span>
+                        </div>
+                        <p class="text-[10px] text-gray-400 font-medium italic mt-2">Coloca el email exacto en tu app bancaria.</p>
+                    </div>
+                </label>
+
+                <!-- PAGO MÓVIL -->
+                <label class="flex flex-col border-2 border-gray-200 rounded-xl p-4 cursor-pointer transition-all has-[:checked]:border-[#FF5722] has-[:checked]:bg-orange-50">
+                    <div class="flex items-center gap-4">
+                        <input type="radio" name="payment" value="pagomovil" class="w-5 h-5 accent-[#FF5722] cursor-pointer">
+                        <div class="flex items-center justify-between flex-grow">
+                            <span class="font-black text-lg tracking-tight uppercase">Pago Móvil</span>
+                            <div class="px-3 py-1 bg-green-500/10 text-green-600 font-bold text-[10px] rounded uppercase">En Bs al Cambio</div>
+                        </div>
+                    </div>
+                    <div class="payment-details mt-4 text-sm text-gray-700 bg-white p-4 rounded-lg border border-gray-200 hidden" id="pagomovil-details">
+                        <div class="flex justify-between items-center border-b border-gray-100 pb-2 mb-2">
+                            <span class="font-bold text-gray-500 uppercase text-[10px]">Banco</span>
+                            <span class="font-black">Nacional de Crédito (0191)</span>
+                        </div>
+                        <div class="flex justify-between items-center border-b border-gray-100 pb-2 mb-2">
+                            <span class="font-bold text-gray-500 uppercase text-[10px]">Cédula</span>
+                            <span class="font-black uppercase">V-30699651</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-gray-500 uppercase text-[10px]">Teléfono</span>
+                            <span class="font-black">0412-7036004</span>
+                        </div>
+                    </div>
+                </label>
+
+                <!-- BINANCE -->
+                <label class="flex flex-col border-2 border-gray-200 rounded-xl p-4 cursor-pointer transition-all has-[:checked]:border-[#FF5722] has-[:checked]:bg-orange-50">
+                    <div class="flex items-center gap-4">
+                        <input type="radio" name="payment" value="binance" class="w-5 h-5 accent-[#FF5722] cursor-pointer">
+                        <div class="flex items-center justify-between flex-grow">
+                            <span class="font-black text-lg tracking-tight uppercase">Binance Pay</span>
+                            <div class="px-3 py-1 bg-[#FCD535]/20 text-[#C99400] font-bold text-[10px] rounded uppercase">Cripto USDT</div>
+                        </div>
+                    </div>
+                    <div class="payment-details mt-4 text-sm text-gray-700 bg-white p-4 rounded-lg border border-gray-200 hidden" id="binance-details">
+                        <div class="flex justify-between items-center border-b border-gray-100 pb-2 mb-2">
+                            <span class="font-bold text-gray-500 uppercase text-[10px]">Binance Email / Pay ID</span>
+                            <span class="font-black">am606axel@gmail.com</span>
+                        </div>
+                        <p class="text-[10px] text-gray-400 font-medium italic mt-2">Envía por Binance Pay directamente a este correo.</p>
+                    </div>
+                </label>
+            </div>
+
+            <!-- REGISTRO DEL PAGO (Referencia) -->
+            <div class="mb-8 border-t border-gray-200 pt-6">
+                <label class="font-bold text-xs text-black uppercase tracking-wider block mb-2">
+                    Número de Referencia <span class="text-[#FF5722]">*</span>
+                </label>
+                <div class="relative">
+                    <input type="text" id="reference-input" autocomplete="off" placeholder="Ingresa los últimos dígitos (Ej: 004561)" class="w-full rounded-xl p-4 bg-gray-50 border-2 border-gray-200 focus:outline-none focus:border-[#FF5722] focus:bg-white transition-colors uppercase font-bold text-gray-800 tracking-wide">
+                </div>
+                <p id="reference-error" class="text-red-500 text-xs font-bold mt-2 hidden">Por favor, ingresa el número de referencia para validar tu pago.</p>
+            </div>
+
+            <button id="confirm-pay-btn" class="mt-auto w-full bg-[#FF5722] text-black font-black text-lg py-4 rounded-full shadow-[0_4px_14px_0_rgba(255,87,34,0.39)] hover:shadow-[0_6px_20px_rgba(255,87,34,0.5)] hover:-translate-y-0.5 hover:bg-orange-500 transition-all duration-300 border-2 border-transparent">
+                CONFIRMAR PAGO
+            </button>
+        </section>
+    </main>
+
+    <!-- Modal "¡Pago Exitoso!" -->
+    <div id="success-modal" class="fixed inset-0 z-[100] bg-black/60 hidden flex items-center justify-center backdrop-blur-sm px-4">
+        <div class="bg-white p-10 rounded-3xl shadow-2xl max-w-sm w-full text-center transform scale-95 opacity-0 transition-all duration-300 ease-out" id="success-modal-content">
+            <div class="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 text-green-500 shadow-inner">
+                <svg class="w-12 h-12" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path></svg>
+            </div>
+            <h2 class="text-3xl font-black uppercase mb-3 text-black">¡Recibido!</h2>
+            <p class="text-gray-500 font-medium mb-8 text-sm">Hemos registrado el pago. Procederemos a validarlo al instante para gestionar tu pedido.</p>
+            <button id="back-store-btn" class="w-full bg-black text-white font-bold py-4 rounded-full hover:bg-[#FF5722] hover:text-black hover:shadow-lg transition-all duration-300">
+                VOLVER A LA TIENDA
+            </button>
+        </div>
+    </div>
+
+    <script src="/checkout/index.js"></script>
+    <style>
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background-color: #E5E7EB; border-radius: 10px; }
+    </style>
+</body>
+</html>

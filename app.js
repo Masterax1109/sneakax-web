@@ -41,6 +41,7 @@ const shoesRouter = require('./controllers/shoes'); // se importa controller sho
     //RUTAS FRONTEND
     app.use('/store', express.static(path.resolve('views', 'store')));
     app.use('/home', express.static(path.resolve('views', 'HOME')));
+    app.use('/product', express.static(path.resolve('views', 'product')));
     app.use('/signup', express.static(path.resolve('views','signup'))) //ruta del signup
     app.use('/login', express.static(path.resolve('views', 'login'))); //ruta del login
     app.use('/components', express.static(path.resolve('views', 'components')));
@@ -51,6 +52,7 @@ const shoesRouter = require('./controllers/shoes'); // se importa controller sho
     res.sendFile(path.resolve('views', 'verify', 'index.html'));
     });// Ruta para leer el link del correo y mostrar la pantalla de verificación
     app.use('/admin', express.static(path.resolve('views', 'admin')));
+    app.use('/checkout', express.static(path.resolve('views', 'checkout')));
 
     //RUTAS BACKEND
     app.use(express.json());

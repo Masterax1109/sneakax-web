@@ -5,7 +5,7 @@ const Shoe = require('../models/shoe');
 shoesRouter.post('/', async (request, response) => {
     try {
         // Asegúrate de extraer TODOS los campos que pide tu modelo
-        const { name, brand, price, sizes, image, stock } = request.body;
+        const { name, brand, price, sizes, image, stock, colorway } = request.body;
 
         const newShoe = new Shoe({
             name,
@@ -13,7 +13,8 @@ shoesRouter.post('/', async (request, response) => {
             price,
             sizes,
             image,
-            stock
+            stock,
+            colorway
         });
 
         // Guardamos en la base de datos
@@ -38,6 +39,19 @@ shoesRouter.get('/', async (request, response) => {
     }
 });
 
+// GET para obtener un zapato por su ID
+shoesRouter.get('/:id', async (request, response) => {
+    try {
+        const shoe = await Shoe.findById(request.params.id);
+        if (!shoe) {
+            return response.status(404).json({ error: 'Zapato no encontrado' });
+        }
+        return response.status(200).json(shoe);
+    } catch (error) {
+        return response.status(500).json({ error: 'Error al obtener el zapato' });
+    }
+});
+
 // DELETE para eliminar un zapato por su ID
 shoesRouter.delete('/:id', async (request, response) => {
     try {
@@ -52,13 +66,14 @@ shoesRouter.delete('/:id', async (request, response) => {
 shoesRouter.put('/:id', async (request, response) => {
     try {
         const { id } = request.params;
-        const { price, stock, sizes } = request.body; // Extraemos lo que queremos permitir editar
+        const { price, stock, sizes, colorway } = request.body; // Extraemos lo que queremos permitir editar
 
         // Creamos un objeto solo con los campos que se van a actualizar
         const updateData = {
             price,
             stock,
-            sizes
+            sizes,
+            colorway
         };
 
         // findByIdAndUpdate busca por ID y actualiza. 

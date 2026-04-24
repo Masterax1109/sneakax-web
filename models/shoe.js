@@ -4,7 +4,11 @@ const shoeSchema = new mongoose.Schema({
     name: { type: String, required: true }, 
     brand: { type: String, required: true }, 
     price: { type: Number, required: true }, 
-    sizes: [{ type: Number }], 
+    colorway: { type: String, default: 'N/A' },
+    sizes: [{ 
+        size: { type: Number, required: true },
+        stock: { type: Number, default: 0 }
+    }], 
     image: { type: String }, // Aquí se el link de la foto
     stock: { type: Number, default: 1 } // Cuántos pares tienes
 });

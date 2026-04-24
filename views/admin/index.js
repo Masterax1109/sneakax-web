@@ -43,22 +43,33 @@ addShoeForm.addEventListener('submit', async (e) => {
     
     const brand = document.querySelector('#shoe-brand').value;
     const name = document.querySelector('#shoe-model').value; 
+    const colorway = document.querySelector('#shoe-colorway').value; 
     const price = Number(document.querySelector('#shoe-price').value);
     const image = document.querySelector('#shoe-image-url').value;
-    const stock = Number(document.querySelector('#shoe-stock').value);
-    const sizes = document.querySelector('#shoe-sizes').value
-        .split(',')
-        .map(size => Number(size.trim()))
-        .filter(size => !isNaN(size) && size !== 0);
+    
+    // Convertir el formato "40:5, 41:2" a [{size: 40, stock: 5}, {size: 41, stock: 2}]
+    const sizesInput = document.querySelector('#shoe-sizes').value;
+    const sizes = sizesInput.split(',')
+        .map(item => {
+            const parts = item.split(':');
+            if (parts.length === 2) {
+                return { size: Number(parts[0].trim()), stock: Number(parts[1].trim()) };
+            }
+            return { size: Number(item.trim()), stock: 0 }; // Fallback
+        })
+        .filter(s => !isNaN(s.size) && s.size !== 0);
+
+    // Calcular stock global en base a las tallas
+    const stock = sizes.reduce((acc, curr) => acc + (curr.stock || 0), 0);
 
     try {
         if (id) {
             // Si hay ID, llamamos a la ruta PUT que creaste en shoes.js
-            await axios.put(`/api/shoes/${id}`, { price, stock, sizes });
+            await axios.put(`/api/shoes/${id}`, { price, stock, sizes, colorway });
             alert('¡Sneaker actualizado con éxito! 🔄');
         } else {
             // Si no hay ID, es un zapato nuevo (POST)
-            await axios.post('/api/shoes', { name, brand, price, sizes, image, stock });
+            await axios.post('/api/shoes', { name, brand, price, sizes, image, stock, colorway });
             alert('¡Zapato agregado con éxito! 👟');
         }
         
@@ -149,9 +160,20 @@ window.editShoe = async (id) => {
             document.querySelector('#shoe-id').value = shoeToEdit.id;
             document.querySelector('#shoe-brand').value = shoeToEdit.brand;
             document.querySelector('#shoe-model').value = shoeToEdit.name;
+            document.querySelector('#shoe-colorway').value = shoeToEdit.colorway || '';
             document.querySelector('#shoe-price').value = shoeToEdit.price;
-            document.querySelector('#shoe-stock').value = shoeToEdit.stock;
-            document.querySelector('#shoe-sizes').value = shoeToEdit.sizes.join(', ');
+            
+            // Format sizes to string "size:stock, size:stock"
+            let sizesStr = '';
+            if (shoeToEdit.sizes && shoeToEdit.sizes.length > 0) {
+                sizesStr = shoeToEdit.sizes.map(s => {
+                    // Soporte para ambos modelos en DB (antiguo: Number, nuevo: Object)
+                    if (typeof s === 'number') return `${s}:0`;
+                    return `${s.size}:${s.stock}`;
+                }).join(', ');
+            }
+            document.querySelector('#shoe-sizes').value = sizesStr;
+            
             document.querySelector('#shoe-image-url').value = shoeToEdit.image;
 
             // 3. Cambiamos el texto del botón para indicar que estamos editando
