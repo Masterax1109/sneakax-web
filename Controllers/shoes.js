@@ -48,4 +48,32 @@ shoesRouter.delete('/:id', async (request, response) => {
     }
 });
 
+// PUT para actualizar un zapato existente
+shoesRouter.put('/:id', async (request, response) => {
+    try {
+        const { id } = request.params;
+        const { price, stock, sizes } = request.body; // Extraemos lo que queremos permitir editar
+
+        // Creamos un objeto solo con los campos que se van a actualizar
+        const updateData = {
+            price,
+            stock,
+            sizes
+        };
+
+        // findByIdAndUpdate busca por ID y actualiza. 
+        // { new: true } devuelve el documento actualizado en lugar del original.
+        const updatedShoe = await Shoe.findByIdAndUpdate(id, updateData, { new: true });
+
+        if (!updatedShoe) {
+            return response.status(404).json({ error: 'Zapato no encontrado' });
+        }
+
+        return response.status(200).json(updatedShoe);
+    } catch (error) {
+        console.error("Error al actualizar:", error);
+        return response.status(400).json({ error: 'Error al actualizar el zapato' });
+    }
+});
+
 module.exports = shoesRouter;

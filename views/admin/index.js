@@ -32,46 +32,48 @@ tabFile.addEventListener('click', () => {
 
 const addShoeForm = document.querySelector('#add-shoe-form');
 
+// ... (código previo de pestañas)
+
+// ESTO ES EL PASO B: Reemplaza tu actual addShoeForm.addEventListener
 addShoeForm.addEventListener('submit', async (e) => {
     e.preventDefault(); 
 
-    // 1. Capturamos los datos básicos
+    // Capturamos el ID oculto para saber si editamos o creamos
+    const id = document.querySelector('#shoe-id').value; 
+    
     const brand = document.querySelector('#shoe-brand').value;
     const name = document.querySelector('#shoe-model').value; 
-    const price = document.querySelector('#shoe-price').value;
+    const price = Number(document.querySelector('#shoe-price').value);
     const image = document.querySelector('#shoe-image-url').value;
-    
-    // 2. Capturamos los nuevos campos
-    const stockInput = document.querySelector('#shoe-stock').value;
-    const sizesInput = document.querySelector('#shoe-sizes').value;
-
-    // 3. Transformamos los datos al formato que pide MongoDB
-    const stock = Number(stockInput); // Aseguramos que sea un número
-    
-    // Convertimos "40, 41, 42" -> [40, 41, 42]
-    const sizes = sizesInput
-        .split(',') // Corta el texto por las comas
-        .map(size => Number(size.trim())) // Le quita espacios y lo vuelve número
-        .filter(size => !isNaN(size) && size !== 0); // Filtra por si pusiste una coma de más
+    const stock = Number(document.querySelector('#shoe-stock').value);
+    const sizes = document.querySelector('#shoe-sizes').value
+        .split(',')
+        .map(size => Number(size.trim()))
+        .filter(size => !isNaN(size) && size !== 0);
 
     try {
-        // Enviamos al backend
-        await axios.post('/api/shoes', { 
-            name, 
-            brand, 
-            price, 
-            sizes, 
-            image, 
-            stock 
-        });
+        if (id) {
+            // Si hay ID, llamamos a la ruta PUT que creaste en shoes.js
+            await axios.put(`/api/shoes/${id}`, { price, stock, sizes });
+            alert('¡Sneaker actualizado con éxito! 🔄');
+        } else {
+            // Si no hay ID, es un zapato nuevo (POST)
+            await axios.post('/api/shoes', { name, brand, price, sizes, image, stock });
+            alert('¡Zapato agregado con éxito! 👟');
+        }
         
-        alert('¡Zapato agregado con éxito a la base de datos! 👟');
-        loadInventory();
+        // Limpiamos el ID oculto y restauramos el botón
+        document.querySelector('#shoe-id').value = ''; 
+        const submitBtn = addShoeForm.querySelector('button[type="submit"]');
+        submitBtn.textContent = 'Guardar en Base de Datos';
+        submitBtn.classList.replace('bg-blue-600', 'bg-black');
+        
         addShoeForm.reset();
+        loadInventory();
 
     } catch (error) {
-        console.error('Error del servidor:', error);
-        alert('Hubo un error al guardar el zapato. Revisa la consola.');
+        console.error('Error:', error);
+        alert('Hubo un error al procesar la solicitud.');
     }
 });
 
@@ -136,9 +138,33 @@ window.deleteShoe = async (id) => {
     }
 };
 
-// 3. Función temporal para Editar (La programaremos luego)
-window.editShoe = (id) => {
-    alert('🛠️ ¡Pronto programaremos la función de editar! ID: ' + id);
+window.editShoe = async (id) => {
+    try {
+        // 1. Buscamos el zapato actual en el inventario cargado (para no hacer otra petición a la DB)
+        const { data: shoes } = await axios.get('/api/shoes');
+        const shoeToEdit = shoes.find(s => s.id === id);
+
+        if (shoeToEdit) {
+            // 2. Llenamos el formulario con los datos actuales
+            document.querySelector('#shoe-id').value = shoeToEdit.id;
+            document.querySelector('#shoe-brand').value = shoeToEdit.brand;
+            document.querySelector('#shoe-model').value = shoeToEdit.name;
+            document.querySelector('#shoe-price').value = shoeToEdit.price;
+            document.querySelector('#shoe-stock').value = shoeToEdit.stock;
+            document.querySelector('#shoe-sizes').value = shoeToEdit.sizes.join(', ');
+            document.querySelector('#shoe-image-url').value = shoeToEdit.image;
+
+            // 3. Cambiamos el texto del botón para indicar que estamos editando
+            const submitBtn = addShoeForm.querySelector('button[type="submit"]');
+            submitBtn.textContent = 'Actualizar Sneaker';
+            submitBtn.classList.replace('bg-black', 'bg-blue-600');
+            
+            // Subimos el scroll hasta el formulario
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    } catch (error) {
+        console.error('Error al cargar datos para editar:', error);
+    }
 };
 
 // Ejecutamos la carga apenas se abre el panel
