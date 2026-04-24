@@ -28,6 +28,36 @@ shoesRouter.post('/', async (request, response) => {
     }
 });
 
+// POST para procesar checkout (bajar stock de compras)
+shoesRouter.post('/checkout', async (request, response) => {
+    try {
+        const { cart } = request.body; // array con {id, size, ...}
+        
+        for (const item of cart) {
+            const shoe = await Shoe.findById(item.id);
+            if (shoe) {
+                // Bajar el stock de la talla específica
+                const sizeIndex = shoe.sizes.findIndex(s => Number(s.size) === Number(item.size));
+                if (sizeIndex !== -1 && shoe.sizes[sizeIndex].stock > 0) {
+                    shoe.sizes[sizeIndex].stock -= 1;
+                }
+                
+                // Bajar el stock global (siempre que llegue a 0 global, podría mostrarse como "Agotado")
+                if (shoe.stock > 0) {
+                    shoe.stock -= 1;
+                }
+                
+                await shoe.save();
+            }
+        }
+        
+        return response.status(200).json({ message: 'Stock actualizado con éxito' });
+    } catch (error) {
+        console.error("Error al procesar checkout:", error);
+        return response.status(500).json({ error: 'Error procesando la compra' });
+    }
+});
+
 // GET para obtener todos los zapatos de la tienda
 shoesRouter.get('/', async (request, response) => {
     try {
@@ -88,6 +118,28 @@ shoesRouter.put('/:id', async (request, response) => {
     } catch (error) {
         console.error("Error al actualizar:", error);
         return response.status(400).json({ error: 'Error al actualizar el zapato' });
+    }
+});
+
+// PUT especial para marcar un zapato como portada
+shoesRouter.put('/:id/feature', async (request, response) => {
+    try {
+        const { id } = request.params;
+        
+        // Primero, quitamos el "featured" a todos los zapatos de la base de datos
+        await Shoe.updateMany({}, { isFeatured: false });
+        
+        // Luego, activamos el "featured" sólo en el zapato que nos pasaron
+        const updatedShoe = await Shoe.findByIdAndUpdate(id, { isFeatured: true }, { new: true });
+        
+        if (!updatedShoe) {
+            return response.status(404).json({ error: 'Zapato no encontrado' });
+        }
+        
+        return response.status(200).json(updatedShoe);
+    } catch (error) {
+        console.error("Error al destacar zapato:", error);
+        return response.status(500).json({ error: 'Error al destacar el zapato' });
     }
 });
 

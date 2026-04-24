@@ -18,26 +18,15 @@
         <!-- Barra de Búsqueda -->
         <div class="flex-grow max-w-4xl mx-8">
             <input 
+                id="search-input"
                 type="text" 
                 placeholder="BUSCAR POR MARCA Y MODELO" 
                 class="w-full border border-black rounded-md p-2 bg-transparent text-sm font-bold focus:outline-[#FF5722] placeholder-gray-600 uppercase"
             >
         </div>
 
-        <!-- 1. Menú Visitante (Botón Login) -->
-        <div id="guest-menu" class="flex">
-            <!-- Cambiamos /login por /home -->
-            <a href="/home" class="bg-[#FF5722] text-black font-bold py-2 px-8 rounded-full hover:bg-orange-600 transition border-2 border-transparent hover:border-black text-sm">
-            LOGIN
-            </a>
-        </div>
-
-        <!-- 2. Menú Logueado (Íconos) -->
-        <div id="logged-menu" class="hidden flex items-center gap-6 text-black relative">
-            <!-- Ícono Usuario -->
-            <button class="hover:text-[#FF5722] transition">
-                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path></svg>
-            </button>
+        <!-- Íconos de Navegación -->
+        <div class="flex items-center gap-6 text-black relative">
             <!-- Ícono Carrito -->
             <button id="cart-icon" class="hover:text-[#FF5722] transition focus:outline-none">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
@@ -47,10 +36,9 @@
                 <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"></path></svg>
             </button>
 
-            <!-- NUEVO: MENÚ DESPLEGABLE -->
+            <!-- MENÚ DESPLEGABLE -->
             <div id="dropdown-menu" class="hidden absolute top-10 right-0 mt-2 bg-white border border-gray-200 shadow-xl rounded-lg w-48 overflow-hidden z-50">
-                
-                <!-- Aquí inyectaremos opciones como 'Mi Perfil' o 'Panel Admin' luego -->
+                <!-- Aquí inyectaremos opciones como 'Panel Admin' luego -->
                 <div id="admin-panel-link"></div>
 
                 <!-- El Botón de Cerrar Sesión movido al menú -->
@@ -70,12 +58,12 @@
             <h1 class="text-xl font-bold mb-4 uppercase text-black">New Drop</h1>
             
             <!-- Espacio para el zapato -->
-            <div class="w-48 h-48 flex items-center justify-center mb-6">
+            <div id="hero-shoe-image" class="w-48 h-48 flex items-center justify-center mb-6">
                 <!-- Por defecto no tiene imagen válida pero le podemos añadir la clase -->
                 <img src="/ruta-a-tu-imagen/jordan.png" alt="Zapatos Jordan" class="object-contain w-full h-full drop-shadow-xl">
             </div>
 
-            <button class="bg-[#FF5722] text-black font-bold py-2 px-14 rounded-full shadow-md hover:bg-orange-600 transition border-2 border-transparent hover:border-black text-sm">
+            <button id="hero-buy-btn" class="bg-[#FF5722] text-black font-bold py-2 px-14 rounded-full shadow-md hover:bg-orange-600 transition border-2 border-transparent hover:border-black text-sm">
                 BUY
             </button>
         </div>

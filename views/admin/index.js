@@ -1,38 +1,4 @@
-// Lógica para las pestañas de la imagen
-const tabUrl = document.getElementById('tab-url');
-const tabFile = document.getElementById('tab-file');
-const inputUrl = document.getElementById('input-url');
-const inputFile = document.getElementById('input-file');
-
-tabUrl.addEventListener('click', () => {
-    // Mostrar URL, ocultar Archivo
-    inputUrl.classList.remove('hidden');
-    inputFile.classList.add('hidden');
-    
-    // Cambiar estilos de las pestañas
-    tabUrl.classList.add('border-black', 'text-black');
-    tabUrl.classList.remove('border-transparent', 'text-gray-400');
-    
-    tabFile.classList.add('border-transparent', 'text-gray-400');
-    tabFile.classList.remove('border-black', 'text-black');
-});
-
-tabFile.addEventListener('click', () => {
-    // Mostrar Archivo, ocultar URL
-    inputFile.classList.remove('hidden');
-    inputUrl.classList.add('hidden');
-    
-    // Cambiar estilos de las pestañas
-    tabFile.classList.add('border-black', 'text-black');
-    tabFile.classList.remove('border-transparent', 'text-gray-400');
-    
-    tabUrl.classList.add('border-transparent', 'text-gray-400');
-    tabUrl.classList.remove('border-black', 'text-black');
-});
-
 const addShoeForm = document.querySelector('#add-shoe-form');
-
-// ... (código previo de pestañas)
 
 // ESTO ES EL PASO B: Reemplaza tu actual addShoeForm.addEventListener
 addShoeForm.addEventListener('submit', async (e) => {
@@ -124,7 +90,11 @@ const loadInventory = async () => {
                 </td>
                 <td class="p-4 font-bold text-gray-800">$${shoe.price}</td>
                 <td class="p-4 font-bold text-gray-800">${shoe.stock} unds.</td>
-                <td class="p-4 text-center space-x-3">
+                <td class="p-4 text-center space-x-3 flex justify-center items-center">
+                    ${shoe.isFeatured 
+                        ? '<span class="text-[#FF5722] font-black text-xs uppercase tracking-wide px-2 py-1 bg-orange-50 rounded">🔥 Portada</span>'
+                        : `<button onclick="featureShoe('${shoe.id}')" class="text-gray-500 hover:text-[#FF5722] font-bold text-xs transition uppercase tracking-wide">Destacar</button>`
+                    }
                     <button onclick="editShoe('${shoe.id}')" class="text-blue-500 hover:text-blue-700 font-bold text-xs transition uppercase tracking-wide">Editar</button>
                     <button onclick="deleteShoe('${shoe.id}')" class="text-red-500 hover:text-red-700 font-bold text-xs transition uppercase tracking-wide">Eliminar</button>
                 </td>
@@ -133,6 +103,18 @@ const loadInventory = async () => {
         });
     } catch (error) {
         console.error('Error al cargar inventario:', error);
+    }
+};
+
+// Función para destacar un zapato
+window.featureShoe = async (id) => {
+    if (confirm('🔥 ¿Quieres establecer este zapato como la portada principal de la tienda?')) {
+        try {
+            await axios.put(`/api/shoes/${id}/feature`);
+            loadInventory(); // Recargamos para ver la etiqueta de Portada
+        } catch (error) {
+            alert('Hubo un error al destacar el zapato.');
+        }
     }
 };
 

@@ -62,8 +62,8 @@ const renderCheckoutCart = () => {
     checkoutTotalLabel.textContent = '$' + total;
 };
 
-// 3. Confirmar pago (vaciar carrito y mostrar modal)
-confirmPayBtn.addEventListener('click', () => {
+// 3. Confirmar pago (vaciar carrito, bajar stock y mostrar modal)
+confirmPayBtn.addEventListener('click', async () => {
     const refText = referenceInput.value.trim();
     
     if (!refText) {
@@ -75,17 +75,33 @@ confirmPayBtn.addEventListener('click', () => {
     
     referenceError.classList.add('hidden');
     referenceInput.classList.remove('border-red-500');
+    
+    // Deshabilitar botón para evitar multiclips
+    confirmPayBtn.disabled = true;
+    confirmPayBtn.textContent = 'PROCESANDO...';
 
-    // MOCK: Aquí podrías enviar la compra a la base de datos a futuro.
-    // Nosotros solo vaciaremos el carrito y mostraremos éxito.
-    localStorage.removeItem('sneakax_cart');
+    const cart = JSON.parse(localStorage.getItem('sneakax_cart')) || [];
 
-    // Mostrar modal con un pequeño efecto visual
-    successModal.classList.remove('hidden');
-    setTimeout(() => {
-        successModalContent.classList.remove('scale-95', 'opacity-0');
-        successModalContent.classList.add('scale-100', 'opacity-100');
-    }, 10);
+    try {
+        // Enviar la petición al backend para descontar el stock
+        await axios.post('/api/shoes/checkout', { cart });
+
+        // Si es exitoso, vaciamos el carrito local
+        localStorage.removeItem('sneakax_cart');
+
+        // Mostrar modal con un pequeño efecto visual
+        successModal.classList.remove('hidden');
+        setTimeout(() => {
+            successModalContent.classList.remove('scale-95', 'opacity-0');
+            successModalContent.classList.add('scale-100', 'opacity-100');
+        }, 10);
+        
+    } catch (error) {
+        console.error("Error al procesar la compra:", error);
+        alert("Lo sentimos, ocurrió un error procesando tu compra. Por favor, intenta de nuevo.");
+        confirmPayBtn.disabled = false;
+        confirmPayBtn.textContent = 'CONFIRMAR PAGO';
+    }
 });
 
 // 4. Volver a tienda luego del pago

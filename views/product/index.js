@@ -37,7 +37,7 @@ if (logoutBtn) {
     logoutBtn.addEventListener('click', async () => {
         try {
             await axios.post('/api/users/logout');
-            window.location.pathname = '/store/'; 
+            window.location.reload();
         } catch (error) {
             console.error('Error al cerrar sesión', error);
         }
@@ -48,9 +48,12 @@ if (logoutBtn) {
 const checkSession = async () => {
     try {
         const { data } = await axios.get('/api/users/me');
-        guestMenu.classList.add('hidden');
-        loggedMenu.classList.remove('hidden');
-        loggedMenu.classList.add('flex');
+        
+        if (guestMenu) guestMenu.classList.add('hidden');
+        if (loggedMenu) {
+            loggedMenu.classList.remove('hidden');
+            loggedMenu.classList.add('flex');
+        }
 
         if (data.rol === 'admin') {
             const adminPanelLink = document.querySelector('#admin-panel-link');

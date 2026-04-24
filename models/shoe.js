@@ -10,7 +10,8 @@ const shoeSchema = new mongoose.Schema({
         stock: { type: Number, default: 0 }
     }], 
     image: { type: String }, // Aquí se el link de la foto
-    stock: { type: Number, default: 1 } // Cuántos pares tienes
+    stock: { type: Number, default: 1 }, // Cuántos pares tienes
+    isFeatured: { type: Boolean, default: false } // Para ser portada en la tienda
 });
 
 // Limpiamos el _id y __v al enviarlo al frontend (como hiciste con el user)
